@@ -6,6 +6,7 @@ CMD ["/sbin/entrypoint.sh"]
 ARG cachet_ver
 ARG archive_url
 
+#values hardcoded at end becasue of build issue
 ENV cachet_ver ${cachet_ver:-2.4.1-HOTFIX}
 ENV archive_url ${archive_url:-https://github.com/fpm-git/Cachet/archive/${cachet_ver}.tar.gz}
 
@@ -79,10 +80,10 @@ RUN wget https://getcomposer.org/installer -O /tmp/composer-setup.php && \
 WORKDIR /var/www/html/
 USER 1001
 
-RUN wget ${archive_url} && \
-    tar xzf ${cachet_ver}.tar.gz --strip-components=1 && \
+RUN wget https://github.com/fpm-git/Cachet/archive/2.4.1-HOTFIX.tar.gz && \
+    tar xzf 2.4.1-HOTFIX.tar.gz --strip-components=1 && \
     chown -R www-data:root /var/www/html && \
-    rm -r ${cachet_ver}.tar.gz && \
+    rm -r 2.4.1-HOTFIX.tar.gz && \
     php /bin/composer.phar global require "hirak/prestissimo:^0.3" && \
     php /bin/composer.phar install -o && \
     rm -rf bootstrap/cache/*
